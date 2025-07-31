@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress 
+metadata: 
+  name: online-botique 
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing #internal for private and internet-facing for public
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/load-balancer-name: online-botique-qa #update lb name 
+    alb.ingress.kubernetes.io/subnets: subnet-0a132ca8cc88a514e, subnet-0d29aa3e15dd03986 #update public subnets
+    alb.ingress.kubernetes.io/security-groups: sg-0d63bfeabdf95a831 #update security groups
+spec: 
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port: 
+              number: 80

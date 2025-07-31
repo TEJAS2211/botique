@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  template:
+    spec:
+      containers:
+      - name: server
+        env:
+        - name: NODE_ENV
+          value: "testing"
+        - name: DEBUG
+          value: "false"
+        - name: API_TIMEOUT
+          value: "15000"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cartservice
+spec:
+  template:
+    spec:
+      containers:
+      - name: server
+        env:
+        - name: NODE_ENV
+          value: "testing"
+        - name: DEBUG
+          value: "false"
+        - name: REDIS_TIMEOUT
+          value: "3000"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkoutservice
+spec:
+  template:
+    spec:
+      containers:
+      - name: server
+        env:
+        - name: NODE_ENV
+          value: "testing"
+        - name: DEBUG
+          value: "false"
+        - name: PAYMENT_TIMEOUT
+          value: "10000"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: productcatalogservice
+spec:
+  template:
+    spec:
+      containers:
+      - name: server
+        env:
+        - name: NODE_ENV
+          value: "testing"
+        - name: DEBUG
+          value: "false"
+        - name: CACHE_TTL
+          value: "300"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: currencyservice
+spec:
+  template:
+    spec:
+      containers:
+      - name: server
+        env:
+        - name: NODE_ENV
+          value: "testing"
+        - name: DEBUG
+          value: "false"
+        - name: CACHE_TTL
+          value: "300"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shippingservice
+spec:
+  template:
+    spec:
+      containers:
+      - name: server
+        env:
+        - name: NODE_ENV
+          value: "testing"
+        - name: DEBUG
+          value: "false"
+        - name: CACHE_TTL
+          value: "300" 

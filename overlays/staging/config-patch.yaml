@@ -1,0 +1,128 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  template:
+    spec:
+      containers:
+      - name: server
+        env:
+        - name: NODE_ENV
+          value: "staging"
+        - name: DEBUG
+          value: "false"
+        - name: API_TIMEOUT
+          value: "10000"
+        - name: CACHE_TTL
+          value: "300"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cartservice
+spec:
+  template:
+    spec:
+      containers:
+      - name: server
+        env:
+        - name: NODE_ENV
+          value: "staging"
+        - name: DEBUG
+          value: "false"
+        - name: REDIS_TIMEOUT
+          value: "2000"
+        - name: CACHE_TTL
+          value: "300"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkoutservice
+spec:
+  template:
+    spec:
+      containers:
+      - name: server
+        env:
+        - name: NODE_ENV
+          value: "staging"
+        - name: DEBUG
+          value: "false"
+        - name: PAYMENT_TIMEOUT
+          value: "8000"
+        - name: CACHE_TTL
+          value: "300"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: productcatalogservice
+spec:
+  template:
+    spec:
+      containers:
+      - name: server
+        env:
+        - name: NODE_ENV
+          value: "staging"
+        - name: DEBUG
+          value: "false"
+        - name: CACHE_TTL
+          value: "600"
+        - name: MAX_CONNECTIONS
+          value: "500"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: db-secrets
+              key: connection-string
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: currencyservice
+spec:
+  template:
+    spec:
+      containers:
+      - name: server
+        env:
+        - name: NODE_ENV
+          value: "staging"
+        - name: DEBUG
+          value: "false"
+        - name: CACHE_TTL
+          value: "600"
+        - name: MAX_CONNECTIONS
+          value: "300"
+        - name: EXCHANGE_RATE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: api-secrets
+              key: exchange-rate-key
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shippingservice
+spec:
+  template:
+    spec:
+      containers:
+      - name: server
+        env:
+        - name: NODE_ENV
+          value: "staging"
+        - name: DEBUG
+          value: "false"
+        - name: CACHE_TTL
+          value: "600"
+        - name: MAX_CONNECTIONS
+          value: "300"
+        - name: SHIPPING_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: api-secrets
+              key: shipping-key 

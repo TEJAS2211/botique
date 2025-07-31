@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shippingservice
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+      - name: server
+        env:
+        - name: LOG_LEVEL
+          value: "debug"
+        - name: NODE_ENV
+          value: "development"
+        - name: DEBUG
+          value: "true"
+        resources:
+          requests:
+            cpu: 50m
+            memory: 32Mi
+          limits:
+            cpu: 100m
+            memory: 64Mi 

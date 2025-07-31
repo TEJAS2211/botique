@@ -1,0 +1,67 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ./ingress.yaml
+  - ./ns.yaml
+  - ./hpa.yaml
+  - ./pdb.yaml
+
+components:
+  - ../../components/without-loadgenerator
+
+namespace: prod
+
+patches:
+  - path: ./ad-deploy.patch.yaml
+  - path: ./frontend-deploy.patch.yaml
+  - path: ./cart-deploy.patch.yaml
+  - path: ./checkout-deploy.patch.yaml
+  - path: ./productcatalog-deploy.patch.yaml
+  - path: ./redis-cart-deploy.patch.yaml
+  - path: ./currency-deploy.patch.yaml
+  - path: ./shipping-deploy.patch.yaml
+  - path: ./monitoring-patch.yaml
+  - path: ./security-patch.yaml
+  - path: ./config-patch.yaml
+  - target:
+      kind: Deployment
+      name: loadgenerator
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: loadgenerator
+      $patch: delete
+  - target:
+      kind: ServiceAccount
+      name: loadgenerator
+    patch: |-
+      apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: loadgenerator
+      $patch: delete
+
+configMapGenerator:
+  - name: frontend-message
+    literals:
+      - message=opq-products - avail 10% off with COUPON "OPQ2025"
+
+secretGenerator:
+  - name: redis-secret
+    literals:
+      - password=redispassword
+  - name: app-secrets
+    literals:
+      - session-secret=productionsessionsecret
+  - name: payment-secrets
+    literals:
+      - api-key=paymentapikey
+  - name: db-secrets
+    literals:
+      - connection-string=postgres://productcatalog:password@db:5432/products
+  - name: api-secrets
+    literals:
+      - exchange-rate-key=exchangerateapikey
+      - shipping-key=shippingapikey

@@ -1,0 +1,153 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  template:
+    spec:
+      containers:
+      - name: server
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: DEBUG
+          value: "false"
+        - name: API_TIMEOUT
+          value: "5000"
+        - name: CACHE_TTL
+          value: "600"
+        - name: MAX_CONNECTIONS
+          value: "1000"
+        - name: ENABLE_COMPRESSION
+          value: "true"
+        - name: ENABLE_HTTPS
+          value: "true"
+        - name: SESSION_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: session-secret
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cartservice
+spec:
+  template:
+    spec:
+      containers:
+      - name: server
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: DEBUG
+          value: "false"
+        - name: REDIS_TIMEOUT
+          value: "1000"
+        - name: CACHE_TTL
+          value: "600"
+        - name: MAX_CONNECTIONS
+          value: "500"
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-secret
+              key: password
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkoutservice
+spec:
+  template:
+    spec:
+      containers:
+      - name: server
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: DEBUG
+          value: "false"
+        - name: PAYMENT_TIMEOUT
+          value: "5000"
+        - name: CACHE_TTL
+          value: "600"
+        - name: MAX_CONNECTIONS
+          value: "500"
+        - name: PAYMENT_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: payment-secrets
+              key: api-key
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: productcatalogservice
+spec:
+  template:
+    spec:
+      containers:
+      - name: server
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: DEBUG
+          value: "false"
+        - name: CACHE_TTL
+          value: "600"
+        - name: MAX_CONNECTIONS
+          value: "500"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: db-secrets
+              key: connection-string
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: currencyservice
+spec:
+  template:
+    spec:
+      containers:
+      - name: server
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: DEBUG
+          value: "false"
+        - name: CACHE_TTL
+          value: "600"
+        - name: MAX_CONNECTIONS
+          value: "300"
+        - name: EXCHANGE_RATE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: api-secrets
+              key: exchange-rate-key
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shippingservice
+spec:
+  template:
+    spec:
+      containers:
+      - name: server
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: DEBUG
+          value: "false"
+        - name: CACHE_TTL
+          value: "600"
+        - name: MAX_CONNECTIONS
+          value: "300"
+        - name: SHIPPING_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: api-secrets
+              key: shipping-key 
