@@ -3,4 +3,10 @@ kind: Deployment
 metadata:
   name: loadgenerator
 spec:
-  replicas: 0
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: null
+    spec:
+      containers:
+      - name: main
