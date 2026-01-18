@@ -4,6 +4,9 @@ metadata:
   name: frontend
 spec:
   template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       securityContext:
         fsGroup: 1000
@@ -26,6 +29,9 @@ metadata:
   name: cartservice
 spec:
   template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       securityContext:
         fsGroup: 1000
@@ -48,6 +54,9 @@ metadata:
   name: checkoutservice
 spec:
   template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       securityContext:
         fsGroup: 1000
@@ -70,6 +79,9 @@ metadata:
   name: productcatalogservice
 spec:
   template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       securityContext:
         fsGroup: 1000
@@ -92,6 +104,9 @@ metadata:
   name: currencyservice
 spec:
   template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       securityContext:
         fsGroup: 1000
@@ -114,6 +129,9 @@ metadata:
   name: shippingservice
 spec:
   template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       securityContext:
         fsGroup: 1000
@@ -128,4 +146,4 @@ spec:
             drop:
               - ALL
           privileged: false
-          readOnlyRootFilesystem: true 
+          readOnlyRootFilesystem: true
