@@ -7,8 +7,8 @@ resources:
 - ./hpa.yaml
 - ./pdb.yaml 
 
-components:
-- ../../components/with-loadgenerator
+#components:
+#- ../../components/with-loadgenerator
 
 namespace: dev
 
