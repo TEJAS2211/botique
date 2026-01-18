@@ -5,7 +5,10 @@ metadata:
 spec:
   replicas: 2
   template:
-    spec: 
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+    spec:
       containers:
         - name: server
           image: us-central1-docker.pkg.dev/google-samples/microservices-demo/adservice:v0.10.2
