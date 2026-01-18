@@ -14,10 +14,10 @@ patches:
   # ❌ REMOVED global Istio disable patch (THIS WAS THE BUG)
 
   # ✅ Disable Istio injection ONLY for specific workloads
-  - target:
-      kind: Deployment
-      name: loadgenerator
-    path: ./istio-inject-remove.patch.yaml
+  #- target:
+   #   kind: Deployment
+    #  name: loadgenerator
+    #path: ./istio-inject-remove.patch.yaml
 
   - target:
       kind: Deployment
