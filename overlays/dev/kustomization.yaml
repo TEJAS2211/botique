@@ -8,24 +8,21 @@ resources:
   - ./ns.yaml
   - ./hpa.yaml
   - ./pdb.yaml
-  # - ./ingress.yaml   # ❌ replaced by Istio Gateway + VirtualService
+  # - ./ingress.yaml   # handled by Istio Gateway
 
 patches:
-  # ❌ REMOVED global Istio disable patch (THIS WAS THE BUG)
+  # ❌ REMOVED global Istio disable patch
+  # - target:
+  #     kind: Deployment
+  #   path: ./istio-inject-remove.patch.yaml
 
-  # ✅ Disable Istio injection ONLY for specific workloads
-  #- target:
-   #   kind: Deployment
-    #  name: loadgenerator
-    #path: ./istio-inject-remove.patch.yaml
-
+  # ✅ Disable Istio ONLY for loadgenerator (intentional)
   - target:
       kind: Deployment
-      name: monitoring
+      name: loadgenerator
     path: ./istio-inject-remove.patch.yaml
 
   # Service-specific patches
-  - path: ./loadgenerator-deploy.patch.yaml
   - path: ./ad-deploy.patch.yaml
   - path: ./frontend-deploy.patch.yaml
   - path: ./cart-deploy.patch.yaml
