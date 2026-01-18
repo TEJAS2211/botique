@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
 - ../../base
 - ./ns.yaml
-- ./ingress.yaml
+#- ./ingress.yaml
 - ./hpa.yaml
 - ./pdb.yaml 
 
