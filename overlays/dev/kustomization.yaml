@@ -1,22 +1,30 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+namespace: dev
+
 resources:
   - ../../base
   - ./ns.yaml
-  # - ./ingress.yaml
   - ./hpa.yaml
   - ./pdb.yaml
-
-namespace: dev
+  # - ./ingress.yaml   # ❌ replaced by Istio Gateway + VirtualService
 
 patches:
-  # 🔥 GLOBAL PATCH – enables Istio sidecar injection for all Deployments
+  # ❌ REMOVED global Istio disable patch (THIS WAS THE BUG)
+
+  # ✅ Disable Istio injection ONLY for specific workloads
   - target:
       kind: Deployment
+      name: loadgenerator
     path: ./istio-inject-remove.patch.yaml
 
-  # Existing service patches
+  - target:
+      kind: Deployment
+      name: monitoring
+    path: ./istio-inject-remove.patch.yaml
+
+  # Service-specific patches
   - path: ./loadgenerator-deploy.patch.yaml
   - path: ./ad-deploy.patch.yaml
   - path: ./frontend-deploy.patch.yaml
@@ -39,15 +47,19 @@ secretGenerator:
   - name: redis-secret
     literals:
       - password=redispassword
+
   - name: app-secrets
     literals:
       - session-secret=devsessionsecret
+
   - name: payment-secrets
     literals:
       - api-key=paymentapikey
+
   - name: db-secrets
     literals:
       - connection-string=postgres://productcatalog:password@db:5432/products
+
   - name: api-secrets
     literals:
       - exchange-rate-key=exchangerateapikey
