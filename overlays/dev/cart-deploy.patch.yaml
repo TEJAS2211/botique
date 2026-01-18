@@ -16,6 +16,33 @@ spec:
           value: "redis-cart:6379"
         - name: LOG_LEVEL
           value: "debug"
+
+        ports:
+        - containerPort: 7070
+
+        # ✅ ISTIO-SAFE PROBES
+        startupProbe:
+          grpc:
+            port: 7070
+          failureThreshold: 30
+          periodSeconds: 5
+
+        readinessProbe:
+          grpc:
+            port: 7070
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 6
+
+        livenessProbe:
+          grpc:
+            port: 7070
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 6
+
         resources:
           requests:
             cpu: 50m
