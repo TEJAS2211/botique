@@ -3,10 +3,12 @@ kind: Deployment
 metadata:
   name: adservice
 spec:
+  replicas: 2
   template:
     metadata:
       annotations:
-        sidecar.istio.io/inject: null
+        sidecar.istio.io/inject: "true"
     spec:
       containers:
-      - name: server
+        - name: server
+          image: us-central1-docker.pkg.dev/google-samples/microservices-demo/adservice:v0.10.2
