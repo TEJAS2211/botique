@@ -4,6 +4,9 @@ metadata:
   name: frontend
 spec:
   template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       containers:
       - name: server
@@ -21,6 +24,9 @@ metadata:
   name: cartservice
 spec:
   template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       containers:
       - name: server
@@ -38,6 +44,9 @@ metadata:
   name: checkoutservice
 spec:
   template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       containers:
       - name: server
@@ -55,6 +64,9 @@ metadata:
   name: productcatalogservice
 spec:
   template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       containers:
       - name: server
@@ -72,6 +84,9 @@ metadata:
   name: currencyservice
 spec:
   template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       containers:
       - name: server
@@ -89,6 +104,9 @@ metadata:
   name: shippingservice
 spec:
   template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       containers:
       - name: server
@@ -98,4 +116,4 @@ spec:
         - name: DEBUG
           value: "true"
         - name: CACHE_TTL
-          value: "60" 
+          value: "60"
