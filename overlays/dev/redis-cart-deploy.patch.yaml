@@ -3,15 +3,10 @@ kind: Deployment
 metadata:
   name: redis-cart
 spec:
-  replicas: 2
   template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: null
     spec:
       containers:
       - name: redis
-        resources:
-          requests:
-            cpu: 25m
-            memory: 32Mi
-          limits:
-            cpu: 50m
-            memory: 64Mi 
