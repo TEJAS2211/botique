@@ -5,6 +5,9 @@ metadata:
 spec:
   replicas: 2
   template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: null
     spec:
       containers:
       - name: server
@@ -19,4 +22,4 @@ spec:
             memory: 32Mi
           limits:
             cpu: 100m
-            memory: 64Mi 
+            memory: 64Mi
