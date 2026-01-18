@@ -1,18 +1,22 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources:
-- ../../base
-- ./ns.yaml
-#- ./ingress.yaml
-- ./hpa.yaml
-- ./pdb.yaml 
 
-#components:
-#- ../../components/with-loadgenerator
+resources:
+  - ../../base
+  - ./ns.yaml
+  # - ./ingress.yaml
+  - ./hpa.yaml
+  - ./pdb.yaml
 
 namespace: dev
 
 patches:
+  # 🔥 GLOBAL PATCH – enables Istio sidecar injection for all Deployments
+  - target:
+      kind: Deployment
+    path: ./istio-inject-remove.patch.yaml
+
+  # Existing service patches
   - path: ./loadgenerator-deploy.patch.yaml
   - path: ./ad-deploy.patch.yaml
   - path: ./frontend-deploy.patch.yaml
