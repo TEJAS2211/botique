@@ -13,7 +13,7 @@ resources:
 namespace: dev
 
 patches:
-  - path: ../../base/loadgenerator/loadgenerator-deploy.patch.yaml
+  - path: ./loadgenerator/loadgenerator-deploy.patch.yaml
   - path: ./ad-deploy.patch.yaml
   - path: ./frontend-deploy.patch.yaml
   - path: ./cart-deploy.patch.yaml
