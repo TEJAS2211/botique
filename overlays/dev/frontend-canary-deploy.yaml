@@ -17,8 +17,7 @@ spec:
     spec:
       containers:
       - name: server
-        # 🚨 DO NOT set image here
-        # It will inherit the SAME image from base, just like stable
+        image: us-central1-docker.pkg.dev/google-samples/microservices-demo/frontend:v0.10.3
         env:
         - name: ENABLE_PROFILER
           value: "1"
