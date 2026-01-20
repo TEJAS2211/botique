@@ -8,9 +8,10 @@ resources:
   - ./ns.yaml
   - ./hpa.yaml
   - ./pdb.yaml
-  # - ./ingress.yaml   # handled by Istio Gateway
   - ./frontend-dr.yaml
   - ./frontend-vs.yaml
+  - ./frontend-canary-deploy.yaml
+  # - ./ingress.yaml   # handled by Istio Gateway
 
 patches:
   # Disable Istio ONLY for loadgenerator
@@ -22,7 +23,6 @@ patches:
   # Service-specific patches
   - path: ./ad-deploy.patch.yaml
   - path: ./frontend-deploy.patch.yaml
-  - path: ./frontend-canary-deploy.yaml
   - path: ./cart-deploy.patch.yaml
   - path: ./checkout-deploy.patch.yaml
   - path: ./productcatalog-deploy.patch.yaml
