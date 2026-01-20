@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend-canary
+  namespace: dev
 spec:
   replicas: 1
   selector:
@@ -16,4 +17,17 @@ spec:
     spec:
       containers:
       - name: server
-        image: frontend:v2
+        # 🚨 DO NOT set image here
+        # It will inherit the SAME image from base, just like stable
+        env:
+        - name: ENABLE_PROFILER
+          value: "1"
+        - name: LOG_LEVEL
+          value: "debug"
+        resources:
+          requests:
+            cpu: 50m
+            memory: 32Mi
+          limits:
+            cpu: 100m
+            memory: 64Mi
