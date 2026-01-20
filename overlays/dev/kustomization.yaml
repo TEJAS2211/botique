@@ -9,14 +9,11 @@ resources:
   - ./hpa.yaml
   - ./pdb.yaml
   # - ./ingress.yaml   # handled by Istio Gateway
+  - ./frontend-dr.yaml
+  - ./frontend-vs.yaml
 
 patches:
-  # ❌ REMOVED global Istio disable patch
-  # - target:
-  #     kind: Deployment
-  #   path: ./istio-inject-remove.patch.yaml
-
-  # ✅ Disable Istio ONLY for loadgenerator (intentional)
+  # Disable Istio ONLY for loadgenerator
   - target:
       kind: Deployment
       name: loadgenerator
@@ -25,6 +22,7 @@ patches:
   # Service-specific patches
   - path: ./ad-deploy.patch.yaml
   - path: ./frontend-deploy.patch.yaml
+  - path: ./frontend-canary-deploy.patch.yaml
   - path: ./cart-deploy.patch.yaml
   - path: ./checkout-deploy.patch.yaml
   - path: ./productcatalog-deploy.patch.yaml
