@@ -8,10 +8,21 @@ resources:
   - ./ns.yaml
   - ./hpa.yaml
   - ./pdb.yaml
+
+  # Frontend resilience
   - ./frontend-dr.yaml
   - ./frontend-vs.yaml
   - ./frontend-canary-deploy.yaml
-  # - ./ingress.yaml   # handled by Istio Gateway
+
+  # Backend circuit breakers
+  - ./dr-backend-cartservice.yaml
+  - ./dr-backend-productcatalogservice.yaml
+  - ./dr-backend-currencyservice.yaml
+  - ./dr-backend-recommendationservice.yaml
+  - ./dr-backend-shippingservice.yaml
+  - ./dr-backend-checkoutservice.yaml
+  - ./dr-backend-adservice.yaml
+
 
 patches:
   # Disable Istio ONLY for loadgenerator
