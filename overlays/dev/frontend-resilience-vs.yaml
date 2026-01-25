@@ -1,24 +1,19 @@
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: frontend
+  name: frontend-resilience
   namespace: dev
 spec:
   hosts:
-  - "a36c7f0b6f35c41be8239cb1977423fd-2019682939.ap-south-1.elb.amazonaws.com"
+  - frontend
   gateways:
   - boutique-gateway
   http:
-  - match:
-    - uri:
-        prefix: /
-    retries:
-      attempts: 3
-      perTryTimeout: 2s
-      retryOn: gateway-error,connect-failure,refused-stream,5xx
-    timeout: 5s
-    route:
+  - route:
     - destination:
         host: frontend
-        port:
-          number: 80
+    timeout: 1s
+    retries:
+      attempts: 1
+      perTryTimeout: 1s
+      retryOn: gateway-error,connect-failure,refused-stream
