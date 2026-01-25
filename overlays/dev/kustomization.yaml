@@ -9,29 +9,20 @@ resources:
   - ./hpa.yaml
   - ./pdb.yaml
 
-  # Frontend resilience
-  - ./frontend-dr.yaml
+  # Frontend (simple routing only)
   - ./frontend-vs.yaml
   - ./frontend-canary-deploy.yaml
 
-  # Backend circuit breakers
+  # 🔥 SINGLE backend circuit breaker
   - ./dr-backend-cartservice.yaml
-  - ./dr-backend-productcatalogservice.yaml
-  - ./dr-backend-currencyservice.yaml
-  - ./dr-backend-recommendationservice.yaml
-  - ./dr-backend-shippingservice.yaml
-  - ./dr-backend-checkoutservice.yaml
-  - ./dr-backend-adservice.yaml
 
 
 patches:
-  # Disable Istio ONLY for loadgenerator
   - target:
       kind: Deployment
       name: loadgenerator
     path: ./istio-inject-remove.patch.yaml
 
-  # Service-specific patches
   - path: ./ad-deploy.patch.yaml
   - path: ./frontend-deploy.patch.yaml
   - path: ./cart-deploy.patch.yaml
@@ -43,30 +34,3 @@ patches:
   - path: ./monitoring-patch.yaml
   - path: ./security-patch.yaml
   - path: ./config-patch.yaml
-
-configMapGenerator:
-  - name: frontend-message
-    literals:
-      - message=opq-products - avail 5% off with COUPON "OPQ2025"
-
-secretGenerator:
-  - name: redis-secret
-    literals:
-      - password=redispassword
-
-  - name: app-secrets
-    literals:
-      - session-secret=devsessionsecret
-
-  - name: payment-secrets
-    literals:
-      - api-key=paymentapikey
-
-  - name: db-secrets
-    literals:
-      - connection-string=postgres://productcatalog:password@db:5432/products
-
-  - name: api-secrets
-    literals:
-      - exchange-rate-key=exchangerateapikey
-      - shipping-key=shippingapikey
