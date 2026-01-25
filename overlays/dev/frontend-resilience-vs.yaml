@@ -14,6 +14,4 @@ spec:
         host: frontend
     timeout: 1s
     retries:
-      attempts: 1
-      perTryTimeout: 1s
-      retryOn: gateway-error,connect-failure,refused-stream
+      attempts: 0   # 🔥 force fail
