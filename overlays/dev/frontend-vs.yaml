@@ -4,17 +4,12 @@ metadata:
   name: frontend
   namespace: dev
 spec:
-  gateways:
-  - istio-system/istio-ingressgateway
   hosts:
   - "*"
+  gateways:
+  - boutique-gateway   # ✅ MUST match Gateway name + namespace
   http:
-  - retries:
-      attempts: 2
-      perTryTimeout: 1s
-      retryOn: 5xx,connect-failure,refused-stream
-    timeout: 3s
-    route:
+  - route:
     - destination:
         host: frontend.dev.svc.cluster.local
         port:
