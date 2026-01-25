@@ -4,8 +4,10 @@ metadata:
   name: frontend
   namespace: dev
 spec:
+  gateways:
+  - istio-system/istio-ingressgateway
   hosts:
-  - frontend
+  - "*"
   http:
   - retries:
       attempts: 2
@@ -14,4 +16,6 @@ spec:
     timeout: 3s
     route:
     - destination:
-        host: frontend
+        host: frontend.dev.svc.cluster.local
+        port:
+          number: 80
