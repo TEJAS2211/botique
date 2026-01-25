@@ -1,23 +1,12 @@
-apiVersion: networking.istio.io/v1beta1
+apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
   name: frontend
   namespace: dev
 spec:
   hosts:
-  - "*"
-  gateways:
-  - dev/boutique-gateway
+  - frontend
   http:
-  - match:
-    - uri:
-        prefix: /
-    route:
+  - route:
     - destination:
         host: frontend
-        subset: stable
-      weight: 90
-    - destination:
-        host: frontend
-        subset: canary
-      weight: 10
