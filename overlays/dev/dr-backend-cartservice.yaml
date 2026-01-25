@@ -6,8 +6,14 @@ metadata:
 spec:
   host: cartservice
   trafficPolicy:
+    connectionPool:
+      tcp:
+        maxConnections: 1
+      http:
+        http1MaxPendingRequests: 1
+        maxRequestsPerConnection: 1
     outlierDetection:
       consecutive5xxErrors: 1
       interval: 5s
-      baseEjectionTime: 30s
+      baseEjectionTime: 1m
       maxEjectionPercent: 100
