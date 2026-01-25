@@ -7,6 +7,11 @@ spec:
   hosts:
   - frontend
   http:
-  - route:
+  - retries:
+      attempts: 2
+      perTryTimeout: 1s
+      retryOn: 5xx,connect-failure,refused-stream
+    timeout: 3s
+    route:
     - destination:
         host: frontend
