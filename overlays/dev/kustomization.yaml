@@ -15,6 +15,7 @@ resources:
   - ./frontend-canary-deploy.yaml
 
   # Backend circuit breakers
+  - ./cartservice-cb.yaml
   - ./dr-backend-cartservice.yaml
   - ./dr-backend-productcatalogservice.yaml
   - ./dr-backend-currencyservice.yaml
